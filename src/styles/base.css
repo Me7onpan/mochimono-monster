@@ -1,0 +1,29 @@
+:root{
+  --bg-deep:#0f172a;
+  --bg-night:#1e1b4b;
+  --card-surface:rgba(255,255,255,.08);
+  --card-surface-strong:rgba(255,255,255,.14);
+  --gold:#facc15;
+  --sky:#38bdf8;
+  --purple:#a855f7;
+  --green:#22c55e;
+  --text-main:#f8fafc;
+  --text-soft:#cbd5e1;
+  --danger:#fb7185;
+  --radius-card:24px;
+  --radius-pill:999px;
+  --font:'M PLUS Rounded 1c','Hiragino Maru Gothic ProN','Yu Gothic',sans-serif;
+  font-family:var(--font);color:var(--text-main);background:var(--bg-deep);font-synthesis:none;text-rendering:optimizeLegibility
+}
+*{box-sizing:border-box}
+html,body,#app{margin:0;min-height:100%;background:var(--bg-deep)}
+html{overflow-x:hidden;overflow-y:auto;scroll-behavior:smooth}
+body{min-width:320px;overflow-x:hidden;overflow-y:visible;overscroll-behavior-x:none;overscroll-behavior-y:auto}
+button[aria-label="もどる"]{position:relative!important;display:block!important;padding:0!important;font-size:0!important;line-height:1!important}button[aria-label="もどる"]::before{content:'';position:absolute;left:50%;top:50%;display:block;width:15px;height:15px;border-left:3px solid currentColor;border-bottom:3px solid currentColor;box-sizing:border-box;transform:translate(-50%,-50%) rotate(45deg)}
+body:before{content:'';position:fixed;z-index:0;inset:0;pointer-events:none;background:radial-gradient(circle at 18% 12%,#38bdf81c 0 2px,transparent 3px),radial-gradient(circle at 78% 20%,#facc1530 0 1px,transparent 2px),radial-gradient(circle at 64% 72%,#a855f72b 0 2px,transparent 3px);background-size:140px 140px,190px 190px,230px 230px}
+button,input{font-family:inherit}
+button{-webkit-tap-highlight-color:transparent}
+ruby{ruby-align:center}rt{font-size:.5em;font-weight:800;color:inherit}
+.page{position:relative;z-index:1;min-height:100svh;overflow-y:visible;background:radial-gradient(circle at 50% -10%,#312e8170,transparent 40%),linear-gradient(155deg,var(--bg-deep),var(--bg-night) 60%,#172554)}
+.page-enter-active,.page-leave-active{transition:opacity .2s ease,transform .2s ease}.page-enter-from{opacity:0;transform:translateY(8px)}.page-leave-to{opacity:0;transform:translateY(-5px)}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}

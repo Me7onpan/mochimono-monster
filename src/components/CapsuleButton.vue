@@ -1,0 +1,5 @@
+<script setup lang="ts">withDefaults(defineProps<{ tone?:'gold'|'sky'|'glass';disabled?:boolean }>(),{tone:'gold',disabled:false});defineEmits<{click:[]}>()</script>
+<template><button class="capsule" :class="tone" :disabled="disabled" @click="$emit('click')"><slot /></button></template>
+<style scoped>
+.capsule{position:relative;width:100%;min-height:68px;padding:14px 24px;border:1px solid #ffffff42;border-radius:var(--radius-pill);color:white;font:900 1.02rem/1.3 var(--font);letter-spacing:.02em;cursor:pointer;overflow:hidden;box-shadow:inset 0 1px #fff6,0 8px 18px #02061766;transition:.18s transform,.18s filter}.capsule:before{content:'';position:absolute;inset:2px;border-radius:inherit;border:1px solid #ffffff24}.capsule:active:not(:disabled){transform:translateY(4px) scale(.99)}.capsule.gold{background:linear-gradient(100deg,#f59e0b,#ef6c57 55%,#a855f7);box-shadow:inset 0 1px #fff8,0 0 24px #facc1560,0 8px 18px #02061780}.capsule.sky{background:linear-gradient(100deg,#0284c7,#6366f1)}.capsule.glass{background:#ffffff12;backdrop-filter:blur(10px)}.capsule:disabled{opacity:.42;filter:grayscale(.5);cursor:not-allowed}
+</style>

@@ -1,0 +1,4 @@
+<template><section class="binder"><div class="binder-rings" aria-hidden="true"><i v-for="n in 6" :key="n"/></div><div class="binder-page"><slot/></div></section></template>
+<style scoped>
+.binder{position:relative;max-width:1040px;margin:18px auto;padding-left:28px}.binder-page{min-height:360px;padding:24px;border:2px solid #ffffff1f;border-radius:20px 30px 30px 20px;background:linear-gradient(100deg,#ffffff0b,#ffffff13 48%,#ffffff09);box-shadow:inset 14px 0 22px #02061745,0 14px 28px #02061770}.binder-rings{position:absolute;z-index:3;left:10px;top:35px;bottom:35px;display:flex;flex-direction:column;justify-content:space-around}.binder-rings i{width:38px;height:10px;border:3px solid #facc15;border-radius:999px;background:#78350f;box-shadow:0 3px 4px #02061780}@media(max-width:600px){.binder{padding-left:18px}.binder-page{padding:16px 12px}.binder-rings{left:3px}.binder-rings i{width:27px}}
+</style>
