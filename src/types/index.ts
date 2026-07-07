@@ -33,3 +33,4 @@ export type TodayState = {
 export type SubjectProgress = Record<string, { completedCount: number; lastCompletedDate?: string }>
 export type ItemProgress = Record<string, { foundCount: number; lastFoundDate?: string }>
 export type Stats = { totalStars: number; streak: number; lastCompletedDate?: string }
+export type WeeklyItemState = Record<string, string>

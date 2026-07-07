@@ -1,6 +1,6 @@
 export type GrowthRank = 'まだ ひみつ' | 'みつけた' | 'なかよし' | 'スーパー' | 'マスター'
 
-const milestones = [
+export const growthMilestones = [
   { count: 1, rank: 'みつけた' as GrowthRank },
   { count: 7, rank: 'なかよし' as GrowthRank },
   { count: 20, rank: 'スーパー' as GrowthRank },
@@ -8,8 +8,8 @@ const milestones = [
 ]
 
 export function growthInfo(count: number) {
-  const current = [...milestones].reverse().find((step) => count >= step.count)
-  const next = milestones.find((step) => count < step.count)
+  const current = [...growthMilestones].reverse().find((step) => count >= step.count)
+  const next = growthMilestones.find((step) => count < step.count)
   return {
     rank: current?.rank ?? 'まだ ひみつ',
     nextRank: next?.rank,

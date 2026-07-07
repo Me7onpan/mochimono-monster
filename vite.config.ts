@@ -8,7 +8,7 @@ export default defineConfig({
     vue(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icons/icon-192.png', 'icons/icon-512.png'],
+      includeAssets: ['icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'],
       workbox: {
         globPatterns: ['**/*.{js,css,html,png,svg,webmanifest}'],
         globIgnores: ['art/item-animals*.png', 'art/subject-monsters*.png'],

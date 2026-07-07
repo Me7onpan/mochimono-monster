@@ -23,6 +23,8 @@ button[aria-label="もどる"]{position:relative!important;display:block!importa
 body:before{content:'';position:fixed;z-index:0;inset:0;pointer-events:none;background:radial-gradient(circle at 18% 12%,#38bdf81c 0 2px,transparent 3px),radial-gradient(circle at 78% 20%,#facc1530 0 1px,transparent 2px),radial-gradient(circle at 64% 72%,#a855f72b 0 2px,transparent 3px);background-size:140px 140px,190px 190px,230px 230px}
 button,input{font-family:inherit}
 button{-webkit-tap-highlight-color:transparent}
+button:not(:disabled){cursor:pointer}
+button:disabled{cursor:not-allowed}
 ruby{ruby-align:center}rt{font-size:.5em;font-weight:800;color:inherit}
 .page{position:relative;z-index:1;min-height:100svh;overflow-y:visible;background:radial-gradient(circle at 50% -10%,#312e8170,transparent 40%),linear-gradient(155deg,var(--bg-deep),var(--bg-night) 60%,#172554)}
 .page-enter-active,.page-leave-active{transition:opacity .2s ease,transform .2s ease}.page-enter-from{opacity:0;transform:translateY(8px)}.page-leave-to{opacity:0;transform:translateY(-5px)}

@@ -15,6 +15,7 @@ const raw: [string, string, string, string, string][] = [
   ['swimcap','水泳帽','すいえいぼう','◉','あざらし'],
   ['poolcard','プールカード','ぷーるかーど','💧','ぺんぎん'],
   ['returnbook','返す本','かえすほん','📚','しか'],
+  ['tablet','タブレット','たぶれっと','▣','こぐま'],
   ['contact','連絡帳','れんらくちょう','📔','あらいぐま'],
   ['freebook','自由帳','じゆうちょう','🗒️','はむすたー'],
   ['deskpad','下じき','したじき','▣','かめ'],
@@ -49,3 +50,5 @@ export const commonItemIds = [
   'cap',
   'homework',
 ]
+
+export const mondayItemIds = ['tablet']
