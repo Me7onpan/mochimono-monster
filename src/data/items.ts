@@ -9,7 +9,7 @@ const raw: [string, string, string, string, string][] = [
   ['pencilcase','筆箱','ふでばこ','✏️','うさぎ'],
   ['bottle','水筒','すいとう','🧃','ぞう'],
   ['smock','スモック','すもっく','🥼','くま'],
-  ['pianica','ピアニカ','ぴあにか','🎹','らっこ'],
+  ['redwhitecap','赤白帽','あかしろぼう','⛑️','かえる'],
   ['swimsuit','水着','みずぎ','🩱','いるか'],
   ['towel','タオル','たおる','▤','ぱんだ'],
   ['swimcap','水泳帽','すいえいぼう','◉','あざらし'],
@@ -49,6 +49,7 @@ export const commonItemIds = [
   'tissue',
   'cap',
   'homework',
+  'reading',
 ]
 
 export const mondayItemIds = ['tablet']

@@ -10,7 +10,8 @@ import { subjectMap } from '../data/subjects'
 const props = defineProps<{ itemIds: string[]; weeklyItemIds: string[]; completed: string[]; selectedSubjectIds: string[]; latest?: string }>()
 const emit = defineEmits<{ back: []; complete: [id: string] }>()
 
-const percent = computed(() => Math.round(props.completed.length / props.itemIds.length * 100))
+const matchedCompleted = computed(() => props.completed.filter((id) => props.itemIds.includes(id)))
+const percent = computed(() => props.itemIds.length ? Math.round(matchedCompleted.value.length / props.itemIds.length * 100) : 0)
 const selectedSubjects = computed(() => props.selectedSubjectIds.map((id) => subjectMap[id]).filter(Boolean))
 const commonIds = computed(() => props.itemIds.filter((id) => commonItemIds.includes(id)))
 const weeklyIds = computed(() => props.itemIds.filter((id) => props.weeklyItemIds.includes(id)))
@@ -32,7 +33,7 @@ const sectionDone = (ids: string[]) => ids.filter((id) => props.completed.includ
     <header class="item-header">
       <button @click="emit('back')" aria-label="もどる">‹</button>
       <div><small><RubyText text="明日" reading="あした" />の</small><h1><RubyText text="持" reading="も" />ち<RubyText text="物" reading="もの" />カード</h1></div>
-      <span>{{ completed.length }}/{{ itemIds.length }}</span>
+      <span>{{ matchedCompleted.length }}/{{ itemIds.length }}</span>
     </header>
 
     <div class="subject-badges">
