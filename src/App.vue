@@ -8,12 +8,13 @@ import ZukanPage from './pages/ZukanPage.vue'
 import { commonItemIds, itemMap, mondayItemIds } from './data/items'
 import { subjectMap } from './data/subjects'
 import { useLocalStorage } from './composables/useLocalStorage'
+import { migrateRetiredItems } from './utils/retiredItems'
 import type { ItemProgress, Stats, SubjectProgress, TodayState, WeeklyItemState } from './types'
 
 type Page = 'home'|'subjects'|'items'|'complete'|'zukan'
 const page = ref<Page>('home')
 const latestItem = ref<string>()
-const updateVersion = '2026-07-07-monster-cards'
+const updateVersion = '2026-10-15-redwhitecap'
 const dateKey = () => {
   const d = new Date()
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
@@ -42,6 +43,10 @@ const seenUpdate = useLocalStorage('mochimono-monster:update-seen', '')
 const updateOpen = ref(seenUpdate.value !== updateVersion)
 
 if (today.value.date !== dateKey()) today.value = emptyToday()
+const migrated = migrateRetiredItems({ today:today.value, itemProgress:itemProgress.value, weeklyItems:weeklyItems.value })
+if (migrated.today !== today.value) today.value = migrated.today
+if (migrated.itemProgress !== itemProgress.value) itemProgress.value = migrated.itemProgress
+if (migrated.weeklyItems !== weeklyItems.value) weeklyItems.value = migrated.weeklyItems
 
 watch(page, async () => {
   await nextTick()
@@ -56,8 +61,12 @@ const weeklyItemIds = computed(() => {
 
 const requiredItemIds = computed(() => {
   const ids = today.value.selectedSubjectIds.flatMap((id)=>subjectMap[id]?.itemIds || [])
-  return [...new Set([...commonItemIds,...weeklyItemIds.value,...ids])]
+  return [...new Set([...commonItemIds,...weeklyItemIds.value,...ids])].filter((id) => itemMap[id])
 })
+const requiredItemsDone = () => {
+  const required = requiredItemIds.value
+  return required.length > 0 && required.every((id) => today.value.completedItemIds.includes(id))
+}
 
 function selectSubjects(ids:string[]) {
   if (today.value.isCompleted) {
@@ -87,13 +96,14 @@ function isStreakContinuation(lastDate:string | undefined, currentDate:string) {
 function completeItem(id:string) {
   if (today.value.completedItemIds.includes(id) || today.value.isCompleted) return
   const item = itemMap[id]
+  if (!item) return
   today.value.completedItemIds.push(id)
   if (!today.value.awakenedItemMonsterIds.includes(item.monsterId)) {
     today.value.awakenedItemMonsterIds.push(item.monsterId)
   }
   latestItem.value = id
   window.setTimeout(()=> { if (latestItem.value===id) latestItem.value=undefined }, 3600)
-  if (today.value.completedItemIds.length === requiredItemIds.value.length) window.setTimeout(finishDay, 3800)
+  if (requiredItemsDone()) window.setTimeout(finishDay, 3800)
 }
 
 function finishDay() {
@@ -108,6 +118,7 @@ function finishDay() {
   }
   for (const id of today.value.completedItemIds) {
     const item = itemMap[id]
+    if (!item) continue
     const old = itemProgress.value[item.monsterId] || { foundCount:0 }
     if (old.lastFoundDate !== dateKey()) {
       itemProgress.value[item.monsterId] = { foundCount:old.foundCount+1, lastFoundDate:dateKey() }
@@ -133,6 +144,8 @@ function closeUpdateNotice() {
   seenUpdate.value = updateVersion
   updateOpen.value = false
 }
+
+if (!today.value.isCompleted && today.value.selectedSubjectIds.length > 0 && requiredItemsDone()) finishDay()
 </script>
 <template>
   <Transition name="page" mode="out-in">
@@ -146,11 +159,11 @@ function closeUpdateNotice() {
   <div v-if="updateOpen" class="update-backdrop">
     <section class="update-card" role="dialog" aria-modal="true" aria-labelledby="update-title">
       <span class="update-badge">NEW</span>
-      <h2 id="update-title">カードが パワーアップ！</h2>
+      <h2 id="update-title">カードが かわったよ！</h2>
       <ul>
-        <li><ruby>伝説<rt>でんせつ</rt></ruby>カードがさらに かっこよく なったよ。</li>
-        <li>ずかんで <ruby>伝説<rt>でんせつ</rt></ruby>カードの<ruby>進化<rt>しんか</rt></ruby>を <ruby>見<rt>み</rt></ruby>られるよ。</li>
-        <li><ruby>特別時程<rt>とくべつじてい</rt></ruby>ヤタガラスと タブレットカードが <ruby>登場<rt>とうじょう</rt></ruby>！</li>
+        <li><ruby>音読<rt>おんどく</rt></ruby>カードは、<ruby>毎日<rt>まいにち</rt></ruby>の もちもの になったよ。</li>
+        <li>ピアニカは <ruby>学校<rt>がっこう</rt></ruby>に あるから、もっていかなくて いいよ。</li>
+        <li><ruby>体育<rt>たいいく</rt></ruby>の <ruby>赤白帽<rt>あかしろぼう</rt></ruby>が あたらしい カードだよ！</li>
       </ul>
       <button type="button" @click="closeUpdateNotice">OK！みにいく</button>
     </section>

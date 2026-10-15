@@ -20,6 +20,8 @@ for i in {1..10}; do
   sips -c 484 296 --cropOffset "$y" "$x" "$SUBJECT_SOURCE" --out "$SUBJECT_DIR/${subject_ids[$i]}.png" >/dev/null
 done
 
+# pianica stays in this list so the v3 sheet cells do not shift.
+# The app no longer shows that card; the instrument stays at school.
 item_ids=(
   japanese-notebook japanese-textbook reading math-notebook math-textbook
   pencilcase bottle smock pianica swimsuit
