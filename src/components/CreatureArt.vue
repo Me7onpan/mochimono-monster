@@ -49,4 +49,8 @@ const rankClass = computed(() => {
 .creature-art.subject img{object-fit:contain!important;transform:scale(1.18);filter:drop-shadow(0 12px 12px #020617a0) drop-shadow(0 0 14px #ffffff24)}
 .creature-art.subject.small img{transform:scale(1.04)}
 .creature-art.subject.large img{transform:scale(1.24)}
+/* Full-bleed item art was drawn to the canvas edge, so hats and ears crossed
+   the rounded avatar. Inset the picture so the animal stays inside the frame. */
+.creature-art.item{overflow:hidden}
+.creature-art.item img{inset:10%;width:auto;height:auto;object-fit:contain}
 </style>
