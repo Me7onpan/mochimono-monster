@@ -1,36 +1,28 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
+import RubyText from './components/RubyText.vue'
 import HomePage from './pages/HomePage.vue'
 import SubjectSelectPage from './pages/SubjectSelectPage.vue'
 import ItemListPage from './pages/ItemListPage.vue'
 import CompletePage from './pages/CompletePage.vue'
 import ZukanPage from './pages/ZukanPage.vue'
-import { commonItemIds, itemMap, mondayItemIds } from './data/items'
+import { commonItemIds, fridayReturnItemIds, itemMap, mondayItemIds } from './data/items'
 import { subjectMap } from './data/subjects'
 import { useLocalStorage } from './composables/useLocalStorage'
 import { migrateRetiredItems } from './utils/retiredItems'
+import { dateKey as formatToday, dueWeeklyItemIds, weeklyFridayTarget, weeklyMondayTarget, weeklySectionKind } from './utils/weeklyItems'
 import type { ItemProgress, Stats, SubjectProgress, TodayState, WeeklyItemState } from './types'
 
 type Page = 'home'|'subjects'|'items'|'complete'|'zukan'
 const page = ref<Page>('home')
 const latestItem = ref<string>()
-const updateVersion = '2026-10-15-redwhitecap'
-const dateKey = () => {
-  const d = new Date()
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
-}
+const updateVersion = '2026-10-25-gymclothes'
+const dateKey = () => formatToday()
 const formatDate = (date:Date) => `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`
 const addDays = (date:string, days:number) => {
   const d = new Date(`${date}T12:00:00`)
   d.setDate(d.getDate()+days)
   return formatDate(d)
-}
-const weeklyMondayTarget = () => {
-  const d = new Date()
-  const weekday = d.getDay()
-  if (weekday === 0) return addDays(dateKey(), 1)
-  if (weekday === 1) return dateKey()
-  return undefined
 }
 const emptyToday = ():TodayState => ({ date:dateKey(), selectedSubjectIds:[], completedItemIds:[], awakenedItemMonsterIds:[], poweredSubjectMonsterIds:[], isCompleted:false, earnedStars:0 })
 const user = useLocalStorage('mochimono-monster:user', { nickname:'', recentSubjectIds:[] as string[] })
@@ -53,11 +45,8 @@ watch(page, async () => {
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
 })
 
-const weeklyItemIds = computed(() => {
-  const target = weeklyMondayTarget()
-  if (!target) return []
-  return mondayItemIds.filter((id) => weeklyItems.value[id] !== target)
-})
+const weeklyItemIds = computed(() => dueWeeklyItemIds(dateKey(), weeklyItems.value, mondayItemIds, fridayReturnItemIds))
+const weeklyKind = computed(() => weeklySectionKind(dateKey()))
 
 const requiredItemIds = computed(() => {
   const ids = today.value.selectedSubjectIds.flatMap((id)=>subjectMap[id]?.itemIds || [])
@@ -124,10 +113,14 @@ function finishDay() {
       itemProgress.value[item.monsterId] = { foundCount:old.foundCount+1, lastFoundDate:dateKey() }
     }
   }
-  const target = weeklyMondayTarget()
-  if (target) {
-    for (const id of mondayItemIds) {
-      if (today.value.completedItemIds.includes(id)) weeklyItems.value[id] = target
+  const todayKey = dateKey()
+  const monday = weeklyMondayTarget(todayKey)
+  const friday = weeklyFridayTarget(todayKey)
+  const weeklyIds = monday ? mondayItemIds : friday ? fridayReturnItemIds : []
+  const weeklyTarget = monday ?? friday
+  if (weeklyTarget) {
+    for (const id of weeklyIds) {
+      if (today.value.completedItemIds.includes(id)) weeklyItems.value[id] = weeklyTarget
     }
   }
   stats.value.streak = isStreakContinuation(stats.value.lastCompletedDate, dateKey()) ? stats.value.streak+1 : 1
@@ -151,7 +144,7 @@ if (!today.value.isCompleted && today.value.selectedSubjectIds.length > 0 && req
   <Transition name="page" mode="out-in">
     <HomePage v-if="page==='home'" :nickname="user.nickname" :today="today" :stats="stats" :subject-progress="subjectProgress" @save-name="(name)=>user.nickname=name" @start="openDailyFlow" @zukan="page='zukan'" />
     <SubjectSelectPage v-else-if="page==='subjects'" :initial="today.isCompleted ? user.recentSubjectIds : today.selectedSubjectIds" :subject-progress="subjectProgress" @back="page='home'" @confirm="selectSubjects" />
-    <ItemListPage v-else-if="page==='items'" :item-ids="requiredItemIds" :weekly-item-ids="weeklyItemIds" :completed="today.completedItemIds" :selected-subject-ids="today.selectedSubjectIds" :latest="latestItem" @back="page='subjects'" @complete="completeItem" />
+    <ItemListPage v-else-if="page==='items'" :item-ids="requiredItemIds" :weekly-item-ids="weeklyItemIds" :weekly-kind="weeklyKind" :completed="today.completedItemIds" :selected-subject-ids="today.selectedSubjectIds" :latest="latestItem" @back="page='subjects'" @complete="completeItem" />
     <CompletePage v-else-if="page==='complete'" :today="today" :stats="stats" :subject-progress="subjectProgress" @home="page='home'" />
     <ZukanPage v-else :subject-progress="subjectProgress" :item-progress="itemProgress" @back="page='home'" />
   </Transition>
@@ -159,11 +152,11 @@ if (!today.value.isCompleted && today.value.selectedSubjectIds.length > 0 && req
   <div v-if="updateOpen" class="update-backdrop">
     <section class="update-card" role="dialog" aria-modal="true" aria-labelledby="update-title">
       <span class="update-badge">NEW</span>
-      <h2 id="update-title">カードが かわったよ！</h2>
+      <h2 id="update-title">あたらしい なかまが きたよ！</h2>
       <ul>
-        <li><ruby>音読<rt>おんどく</rt></ruby>カードは、<ruby>毎日<rt>まいにち</rt></ruby>の もちもの になったよ。</li>
-        <li>ピアニカは <ruby>学校<rt>がっこう</rt></ruby>に あるから、もっていかなくて いいよ。</li>
-        <li><ruby>体育<rt>たいいく</rt></ruby>の <ruby>赤白帽<rt>あかしろぼう</rt></ruby>が あたらしい カードだよ！</li>
+        <li><RubyText text="作文帳" reading="さくぶんちょう" />れんじゃくが、<RubyText text="毎日" reading="まいにち" />の もちものに なったよ！</li>
+        <li><RubyText text="体操着" reading="たいそうぎ" />れっさーぱんだが、<RubyText text="月曜日" reading="げつようび" />の もちものに なったよ！</li>
+        <li><RubyText text="金曜日" reading="きんようび" />は、<RubyText text="体操着" reading="たいそうぎ" />を おうちに もってかえろう。</li>
       </ul>
       <button type="button" @click="closeUpdateNotice">OK！みにいく</button>
     </section>

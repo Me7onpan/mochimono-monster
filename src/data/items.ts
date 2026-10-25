@@ -3,6 +3,7 @@ import type { Item } from '../types'
 const raw: [string, string, string, string, string][] = [
   ['japanese-notebook','国語ノート','こくごのーと','📓','いぬ'],
   ['japanese-textbook','国語教科書','こくごきょうかしょ','📕','ねこ'],
+  ['essaybook','作文帳','さくぶんちょう','📕','れんじゃく'],
   ['reading','音読カード','おんどくかーど','🎤','ふくろう'],
   ['math-notebook','算数ノート','さんすうのーと','📓','さる'],
   ['math-textbook','算数教科書','さんすうきょうかしょ','📘','きつね'],
@@ -16,6 +17,7 @@ const raw: [string, string, string, string, string][] = [
   ['poolcard','プールカード','ぷーるかーど','💧','ぺんぎん'],
   ['returnbook','返す本','かえすほん','📚','しか'],
   ['tablet','タブレット','たぶれっと','▣','こぐま'],
+  ['gymclothes','体操着','たいそうぎ','👕','れっさーぱんだ'],
   ['contact','連絡帳','れんらくちょう','📔','あらいぐま'],
   ['freebook','自由帳','じゆうちょう','🗒️','はむすたー'],
   ['deskpad','下じき','したじき','▣','かめ'],
@@ -50,6 +52,10 @@ export const commonItemIds = [
   'cap',
   'homework',
   'reading',
+  'essaybook',
 ]
 
-export const mondayItemIds = ['tablet']
+export const mondayItemIds = ['tablet', 'gymclothes']
+
+/** Brought home on Friday. Still uses mondayItemIds for the Sunday/Monday drop-off. */
+export const fridayReturnItemIds = ['gymclothes']

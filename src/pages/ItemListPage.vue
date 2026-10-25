@@ -7,7 +7,7 @@ import RubyText from '../components/RubyText.vue'
 import { commonItemIds, itemMap } from '../data/items'
 import { subjectMap } from '../data/subjects'
 
-const props = defineProps<{ itemIds: string[]; weeklyItemIds: string[]; completed: string[]; selectedSubjectIds: string[]; latest?: string }>()
+const props = withDefaults(defineProps<{ itemIds: string[]; weeklyItemIds: string[]; weeklyKind?: 'monday' | 'friday'; completed: string[]; selectedSubjectIds: string[]; latest?: string }>(), { weeklyKind: 'monday' })
 const emit = defineEmits<{ back: []; complete: [id: string] }>()
 
 const matchedCompleted = computed(() => props.completed.filter((id) => props.itemIds.includes(id)))
@@ -51,7 +51,7 @@ const sectionDone = (ids: string[]) => ids.filter((id) => props.completed.includ
     </section>
 
     <section v-if="weeklyIds.length" class="item-section weekly-section">
-      <header class="section-heading"><div><small><RubyText text="月曜日" reading="げつようび" />の</small><h2>わすれちゃダメ！</h2></div><b>{{ sectionDone(weeklyIds) }}/{{ weeklyIds.length }}</b></header>
+      <header class="section-heading"><div><small v-if="weeklyKind === 'friday'"><RubyText text="金曜日" reading="きんようび" />の</small><small v-else><RubyText text="月曜日" reading="げつようび" />の</small><h2 v-if="weeklyKind === 'friday'">おうちに かえそう！</h2><h2 v-else>わすれちゃダメ！</h2></div><b>{{ sectionDone(weeklyIds) }}/{{ weeklyIds.length }}</b></header>
       <div class="item-grid"><ItemCard v-for="id in weeklyIds" :key="id" :item="itemMap[id]" :done="completed.includes(id)" :new-friend="latest === id" :target-subjects="[]" @complete="emit('complete', id)" /></div>
     </section>
 
