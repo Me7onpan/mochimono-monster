@@ -17,6 +17,8 @@ const raw: [string, string, string, string, string][] = [
   ['poolcard','プールカード','ぷーるかーど','💧','ぺんぎん'],
   ['returnbook','返す本','かえすほん','📚','しか'],
   ['tablet','タブレット','たぶれっと','▣','こぐま'],
+  // Motif stays blank until the 体操着 character art is chosen.
+  ['gymclothes','体操着','たいそうぎ','👕',''],
   ['contact','連絡帳','れんらくちょう','📔','あらいぐま'],
   ['freebook','自由帳','じゆうちょう','🗒️','はむすたー'],
   ['deskpad','下じき','したじき','▣','かめ'],
@@ -51,6 +53,7 @@ export const commonItemIds = [
   'cap',
   'homework',
   'reading',
+  'essaybook',
 ]
 
-export const mondayItemIds = ['tablet']
+export const mondayItemIds = ['tablet', 'gymclothes']

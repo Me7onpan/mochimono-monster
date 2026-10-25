@@ -15,7 +15,7 @@ import type { ItemProgress, Stats, SubjectProgress, TodayState, WeeklyItemState 
 type Page = 'home'|'subjects'|'items'|'complete'|'zukan'
 const page = ref<Page>('home')
 const latestItem = ref<string>()
-const updateVersion = '2026-10-25-essaybook'
+const updateVersion = '2026-10-25-daily-essaybook'
 const dateKey = () => {
   const d = new Date()
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
@@ -162,8 +162,9 @@ if (!today.value.isCompleted && today.value.selectedSubjectIds.length > 0 && req
       <span class="update-badge">NEW</span>
       <h2 id="update-title">あたらしい なかまが きたよ！</h2>
       <ul>
-        <li><RubyText text="作文帳" reading="さくぶんちょう" />れんじゃくが、<RubyText text="国語" reading="こくご" />の なかまに なったよ！</li>
-        <li><RubyText text="国語" reading="こくご" />の ひには、あかい <RubyText text="作文帳" reading="さくぶんちょう" />を もっていこう。</li>
+        <li><RubyText text="作文帳" reading="さくぶんちょう" />れんじゃくが、<RubyText text="毎日" reading="まいにち" />の もちものに なったよ！</li>
+        <li>まいにち、あかい <RubyText text="作文帳" reading="さくぶんちょう" />を わすれずに もっていこう。</li>
+        <li><RubyText text="月曜日" reading="げつようび" />の まえに、<RubyText text="体操着" reading="たいそうぎ" />も もっていこう。</li>
       </ul>
       <button type="button" @click="closeUpdateNotice">OK！みにいく</button>
     </section>
