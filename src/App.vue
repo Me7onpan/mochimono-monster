@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
+import RubyText from './components/RubyText.vue'
 import HomePage from './pages/HomePage.vue'
 import SubjectSelectPage from './pages/SubjectSelectPage.vue'
 import ItemListPage from './pages/ItemListPage.vue'
@@ -14,7 +15,7 @@ import type { ItemProgress, Stats, SubjectProgress, TodayState, WeeklyItemState 
 type Page = 'home'|'subjects'|'items'|'complete'|'zukan'
 const page = ref<Page>('home')
 const latestItem = ref<string>()
-const updateVersion = '2026-10-15-redwhitecap'
+const updateVersion = '2026-10-25-essaybook'
 const dateKey = () => {
   const d = new Date()
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
@@ -159,11 +160,10 @@ if (!today.value.isCompleted && today.value.selectedSubjectIds.length > 0 && req
   <div v-if="updateOpen" class="update-backdrop">
     <section class="update-card" role="dialog" aria-modal="true" aria-labelledby="update-title">
       <span class="update-badge">NEW</span>
-      <h2 id="update-title">カードが かわったよ！</h2>
+      <h2 id="update-title">あたらしい なかまが きたよ！</h2>
       <ul>
-        <li><ruby>音読<rt>おんどく</rt></ruby>カードは、<ruby>毎日<rt>まいにち</rt></ruby>の もちもの になったよ。</li>
-        <li>ピアニカは <ruby>学校<rt>がっこう</rt></ruby>に あるから、もっていかなくて いいよ。</li>
-        <li><ruby>体育<rt>たいいく</rt></ruby>の <ruby>赤白帽<rt>あかしろぼう</rt></ruby>が あたらしい カードだよ！</li>
+        <li><RubyText text="作文帳" reading="さくぶんちょう" />れんじゃくが、<RubyText text="国語" reading="こくご" />の なかまに なったよ！</li>
+        <li><RubyText text="国語" reading="こくご" />の ひには、あかい <RubyText text="作文帳" reading="さくぶんちょう" />を もっていこう。</li>
       </ul>
       <button type="button" @click="closeUpdateNotice">OK！みにいく</button>
     </section>

@@ -3,6 +3,7 @@ import type { Item } from '../types'
 const raw: [string, string, string, string, string][] = [
   ['japanese-notebook','国語ノート','こくごのーと','📓','いぬ'],
   ['japanese-textbook','国語教科書','こくごきょうかしょ','📕','ねこ'],
+  ['essaybook','作文帳','さくぶんちょう','📕','れんじゃく'],
   ['reading','音読カード','おんどくかーど','🎤','ふくろう'],
   ['math-notebook','算数ノート','さんすうのーと','📓','さる'],
   ['math-textbook','算数教科書','さんすうきょうかしょ','📘','きつね'],
