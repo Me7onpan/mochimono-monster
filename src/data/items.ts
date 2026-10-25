@@ -17,8 +17,7 @@ const raw: [string, string, string, string, string][] = [
   ['poolcard','プールカード','ぷーるかーど','💧','ぺんぎん'],
   ['returnbook','返す本','かえすほん','📚','しか'],
   ['tablet','タブレット','たぶれっと','▣','こぐま'],
-  // Motif stays blank until the 体操着 character art is chosen.
-  ['gymclothes','体操着','たいそうぎ','👕',''],
+  ['gymclothes','体操着','たいそうぎ','👕','れっさーぱんだ'],
   ['contact','連絡帳','れんらくちょう','📔','あらいぐま'],
   ['freebook','自由帳','じゆうちょう','🗒️','はむすたー'],
   ['deskpad','下じき','したじき','▣','かめ'],
@@ -57,3 +56,6 @@ export const commonItemIds = [
 ]
 
 export const mondayItemIds = ['tablet', 'gymclothes']
+
+/** Brought home on Friday. Still uses mondayItemIds for the Sunday/Monday drop-off. */
+export const fridayReturnItemIds = ['gymclothes']
