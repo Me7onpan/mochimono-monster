@@ -124,21 +124,47 @@ button.album-card{font-family:var(--font);color:inherit;cursor:pointer}.album-ca
 .album-copy h2{min-height:1.45em;white-space:nowrap}.album-copy .undiscovered{display:block;font-size:.72rem;white-space:nowrap}.album-copy h2 :deep(.monster-name){font-size:.88rem}.companion .album-copy h2 :deep(.monster-name){font-size:.84rem}
 .evolution-card.rank-mega{
   --rank-a:#fbcfe8;
-  --rank-b:#a5f3fc;
+  --rank-b:#c4b5fd;
   --rank-glow:#ddd6fe;
   background:
-    radial-gradient(circle at 50% 28%, #e9d5ff38, #02061782 64%) padding-box,
+    linear-gradient(165deg, #241838, #141228 62%, #10182c) padding-box,
     linear-gradient(135deg, #fde68a, #f9a8d4, #c4b5fd, #7dd3fc, #a7f3d0, #fde68a) border-box;
-  box-shadow: inset 0 0 0 2px #ffffff18, 0 8px 16px #02061775, 0 0 20px #c4b5fd55;
+  box-shadow: inset 0 0 0 1px #ffffff33, 0 8px 16px #02061775, 0 0 14px #c4b5fd73;
+  filter: none;
 }
 .evolution-card.rank-special{
   --rank-a:#fffef8;
-  --rank-b:#f6e27a;
-  --rank-glow:#fef3c7;
+  --rank-b:#f0d78a;
+  --rank-glow:#fde68a;
   background:
-    radial-gradient(circle at 50% 20%, #fff7d64d, #02061782 64%) padding-box,
-    linear-gradient(135deg, #fffef8, #fde68a, #fff, #f8e7b0, #fffef8) border-box;
-  box-shadow: inset 0 0 18px #fff7d628, 0 8px 16px #02061775, 0 0 24px #fde68a66;
+    linear-gradient(165deg, #2a2316, #171322 58%, #10182c) padding-box,
+    linear-gradient(135deg, #fffef6, #fde68a, #fff6d0, #f3e0a4, #fffef6) border-box;
+  box-shadow: inset 0 0 0 1px #fff1c266, 0 8px 16px #02061775, 0 0 12px #fde68aaa, 0 0 22px #fff4c44d;
+  filter: none;
+}
+.evolution-card.rank-mega strong,
+.evolution-card.rank-special strong{
+  position: relative;
+  z-index: 3;
+  color: #fff;
+  text-shadow: 0 1px 2px #020617;
+}
+.evolution-card.rank-mega small,
+.evolution-card.rank-special small{
+  position: relative;
+  z-index: 3;
+  color: #fde68a;
+  text-shadow: 0 1px 2px #020617;
+}
+.evolution-card.rank-mega:not(.locked) .evolution-art :deep(img),
+.evolution-card.rank-special:not(.locked) .evolution-art :deep(img){
+  opacity: 1;
+  filter: drop-shadow(0 6px 8px #020617c0) !important;
+}
+.evolution-card.rank-mega.locked,
+.evolution-card.rank-special.locked{
+  filter: saturate(.42) brightness(.7);
+  box-shadow: 0 8px 15px #02061770;
 }
 .album-card.legendary.rank-mega{
   background:
@@ -154,7 +180,8 @@ button.album-card{font-family:var(--font);color:inherit;cursor:pointer}.album-ca
 }
 .evolution-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .evolution-card{position:relative;min-height:0;padding:8px 4px 8px;overflow:hidden}
-.evolution-art{min-height:0}
+.evolution-art{min-height:0;overflow:hidden}
+.evolution-art :deep(.creature-art.subject img){transform:scale(1)}
 .evolution-art :deep(.creature-art.subject){width:min(118px,26vw)}
 .evolution-card strong{font-size:clamp(.68rem,2.5vw,.88rem);line-height:1.15}
 .evolution-card small{font-size:clamp(.52rem,2vw,.64rem);line-height:1.15}

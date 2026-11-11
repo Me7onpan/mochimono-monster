@@ -57,20 +57,18 @@ useCardTilt(rootEl)
 }
 .legend-card.rank-special{
   --frame-a:#fffef8;
-  --frame-b:#f6e27a;
-  --frame-glow:#fff7d6cc;
+  --frame-b:#f0d78a;
+  --frame-glow:#fff4c888;
   background:
-    radial-gradient(circle at 50% 16%,#fff7d61f,transparent 42%) padding-box,
     linear-gradient(155deg,#2a2416,#17132a 48%,#0f172a) padding-box,
-    linear-gradient(135deg,#fffef8,#fde68a,#fff,#f8e7b0,#fffef8) border-box;
+    linear-gradient(135deg,#fffef6,#fde68a,#fff6d0,#f3e0a4,#fffef6) border-box;
   box-shadow:
-    inset 0 0 0 3px #fff7d640,
-    inset 0 0 36px #fef3c738,
+    inset 0 0 0 1px #fff1c255,
     0 18px 30px #02061788,
-    0 0 42px #fde68a70;
+    0 0 28px #fde68a88;
 }
 .legend-card.rank-special::before{
-  border-color:#fff7d6;
-  box-shadow:inset 0 0 22px #fff4c866,0 0 16px #fde68a44;
+  border-color:#fff4c8;
+  box-shadow:inset 0 0 0 1px #fff7d655,0 0 12px #fde68a44;
 }
 </style>
