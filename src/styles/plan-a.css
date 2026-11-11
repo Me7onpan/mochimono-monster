@@ -1,0 +1,198 @@
+/* Living cards: idle motion, holographic shine, aura, sparkles.
+   Markup adds plan-a-* classes. Honors prefers-reduced-motion. */
+
+.plan-a-tilt {
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform .35s ease-out, box-shadow .24s ease;
+  will-change: transform;
+}
+.plan-a-tilt.is-tilting {
+  transition: transform .08s ease-out;
+}
+
+.plan-a-glare {
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, .55) 0%,
+    rgba(255, 255, 255, .14) 22%,
+    transparent 58%
+  );
+  opacity: var(--glare-opacity, 0);
+  mix-blend-mode: soft-light;
+  transition: opacity .2s ease;
+}
+
+.creature-art.subject.plan-a-idle {
+  animation: plan-a-breathe var(--idle-duration, 3.8s) ease-in-out var(--idle-delay, 0s) infinite;
+  transform-origin: 50% 70%;
+  will-change: transform;
+}
+@keyframes plan-a-breathe {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  40% { transform: translateY(-8px) rotate(-1.3deg) scale(1.03); }
+  70% { transform: translateY(3px) rotate(.9deg) scale(1.01); }
+}
+
+.creature-art.item.plan-a-idle {
+  animation: plan-a-item-wiggle var(--idle-duration, 2.9s) ease-in-out var(--idle-delay, 0s) infinite;
+  transform-origin: 50% 80%;
+  will-change: transform;
+}
+.item-card.done .creature-art.item.plan-a-idle {
+  animation-duration: var(--idle-duration, 2.4s);
+}
+@keyframes plan-a-item-wiggle {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  25% { transform: translateY(-5px) rotate(-4deg) scale(1.03); }
+  50% { transform: translateY(0) rotate(3deg) scale(1); }
+  75% { transform: translateY(-3px) rotate(-2deg) scale(1.02); }
+}
+
+.art-stage.plan-a-aura::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 8%;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+}
+.legend-card.rank-super .art-stage.plan-a-aura::before {
+  background: radial-gradient(circle, #c4b5fd88 0%, #a855f745 38%, transparent 70%);
+  animation: plan-a-aura 2.8s ease-in-out infinite;
+  opacity: 1;
+}
+.legend-card.rank-master .art-stage.plan-a-aura::before {
+  background: radial-gradient(circle, #fde68acc 0%, #facc1566 32%, #a855f740 58%, transparent 72%);
+  animation: plan-a-aura 2.4s ease-in-out infinite;
+  opacity: 1;
+  filter: saturate(1.15);
+}
+.legend-card.rank-mega .art-stage.plan-a-aura::before {
+  background: radial-gradient(circle, #fbcfe8bb 0%, #ddd6fe66 28%, #bae6fd55 46%, #a7f3d044 62%, transparent 76%);
+  animation: plan-a-aura 2.6s ease-in-out infinite;
+  opacity: 1;
+}
+.legend-card.rank-special .art-stage.plan-a-aura::before {
+  background: radial-gradient(circle, #fffef6ee 0%, #fde68a99 26%, #fff4cc66 48%, transparent 74%);
+  animation: plan-a-aura 2.2s ease-in-out infinite;
+  opacity: 1;
+}
+@keyframes plan-a-aura {
+  0%, 100% { transform: scale(.88); opacity: .55; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+.foil-layer.plan-a-holo::after {
+  animation: plan-a-holo-sweep 5.2s ease-in-out var(--holo-delay, 0s) infinite;
+}
+.foil-layer.plan-a-holo.rank-found::after {
+  background: linear-gradient(115deg, transparent 36%, #ffffff14 44%, #e2e8f040 50%, #ffffff14 56%, transparent 64%);
+}
+.foil-layer.plan-a-holo.rank-friend::after {
+  background: linear-gradient(115deg, transparent 34%, #ffffff18 40%, #7dd3fc55 47%, #bae6fd50 52%, #38bdf840 58%, transparent 66%);
+  animation-duration: 4.6s;
+}
+.foil-layer.plan-a-holo.rank-super::after {
+  background: linear-gradient(115deg, transparent 30%, #ffffff22 36%, #c4b5fd66 42%, #38bdf855 48%, #e879f955 54%, #a855f760 60%, transparent 70%);
+  animation-duration: 4.2s;
+  filter: saturate(1.25) brightness(1.08);
+}
+.foil-layer.plan-a-holo.rank-master::after {
+  background: linear-gradient(115deg, transparent 28%, #ffffff30 34%, #fb718555 39%, #facc15aa 46%, #fef08acc 51%, #38bdf866 57%, #a855f780 63%, transparent 72%);
+  animation-duration: 3.6s;
+  filter: saturate(1.45) brightness(1.18);
+}
+.foil-layer.plan-a-holo.rank-master::before {
+  content: '';
+  position: absolute;
+  inset: -90% -50%;
+  background: linear-gradient(70deg, transparent 40%, #fef08a33 48%, #ffffff2a 50%, #38bdf833 54%, transparent 62%);
+  animation: plan-a-holo-sweep 6.4s ease-in-out .9s infinite reverse;
+  pointer-events: none;
+}
+.foil-layer.plan-a-holo.rank-mega::after {
+  background: linear-gradient(115deg, transparent 24%, #ffffff2e 32%, #fbcfe866 38%, #ddd6fe70 44%, #bae6fd66 50%, #a7f3d055 56%, #fde68a66 62%, transparent 72%);
+  animation-duration: 4.4s;
+  filter: saturate(1.12) brightness(1.06);
+}
+.foil-layer.plan-a-holo.rank-mega::before {
+  content: '';
+  position: absolute;
+  inset: -90% -50%;
+  background: linear-gradient(72deg, transparent 38%, #f9a8d433 46%, #ffffff24 50%, #a5f3fc38 56%, transparent 64%);
+  animation: plan-a-holo-sweep 6.2s ease-in-out .7s infinite reverse;
+  pointer-events: none;
+}
+.foil-layer.plan-a-holo.rank-special::after {
+  background: linear-gradient(115deg, transparent 22%, #ffffff66 32%, #fff7d6dd 42%, #fde68ab8 50%, #fffef8cc 56%, #f6e7b099 64%, transparent 74%);
+  animation-duration: 3.8s;
+  filter: saturate(1.04) brightness(1.1);
+}
+.foil-layer.plan-a-holo.rank-special::before {
+  content: '';
+  position: absolute;
+  inset: -100% -60%;
+  background: radial-gradient(circle at 50% 46%, #ffffff55 0%, #fde68a33 16%, transparent 42%);
+  animation: plan-a-special-glow 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes plan-a-holo-sweep {
+  0% { transform: translateX(-62%) rotate(8deg); opacity: 0; }
+  12% { opacity: 1; }
+  48% { transform: translateX(58%) rotate(8deg); opacity: 0; }
+  100% { transform: translateX(58%) rotate(8deg); opacity: 0; }
+}
+@keyframes plan-a-special-glow {
+  0%, 100% { opacity: .4; transform: scale(.94); }
+  50% { opacity: .95; transform: scale(1.04); }
+}
+
+.particles.plan-a-ambient i {
+  animation-name: plan-a-sparkle;
+  animation-duration: calc(3.2s + (var(--n) * .11s));
+  animation-delay: calc(var(--n) * -.37s);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  color: #fde68a;
+}
+.legend-card.rank-friend .particles.plan-a-ambient i { color: #bae6fd; }
+.legend-card.rank-super .particles.plan-a-ambient i:nth-child(odd) { color: #e9d5ff; }
+.legend-card.rank-super .particles.plan-a-ambient i:nth-child(even) { color: #fde68a; }
+.legend-card.rank-master .particles.plan-a-ambient i:nth-child(3n) { color: #fef08a; }
+.legend-card.rank-master .particles.plan-a-ambient i:nth-child(3n+1) { color: #fdba74; }
+.legend-card.rank-master .particles.plan-a-ambient i:nth-child(3n+2) { color: #e9d5ff; }
+.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n) { color: #fbcfe8; }
+.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n+1) { color: #ddd6fe; }
+.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n+2) { color: #bae6fd; }
+.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n+3) { color: #fde68a; }
+.legend-card.rank-special .particles.plan-a-ambient i:nth-child(odd) { color: #fff7d6; }
+.legend-card.rank-special .particles.plan-a-ambient i:nth-child(even) { color: #fde68a; }
+@keyframes plan-a-sparkle {
+  0%, 100% { opacity: 0; transform: translateY(10px) scale(.35) rotate(0deg); }
+  18% { opacity: .95; }
+  50% { opacity: .75; transform: translateY(-16px) scale(1) rotate(80deg); }
+  82% { opacity: .2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .creature-art.plan-a-idle,
+  .art-stage.plan-a-aura::before,
+  .foil-layer.plan-a-holo::before,
+  .foil-layer.plan-a-holo::after,
+  .particles.plan-a-ambient i {
+    animation: none !important;
+  }
+  .plan-a-tilt,
+  .plan-a-tilt.is-tilting {
+    transform: none !important;
+    transition: none !important;
+  }
+  .plan-a-glare { opacity: 0 !important; }
+}

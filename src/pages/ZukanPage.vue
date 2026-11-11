@@ -8,7 +8,7 @@ import RubyText from '../components/RubyText.vue'
 import ZukanBinder from '../components/ZukanBinder.vue'
 import { subjects } from '../data/subjects'
 import { items } from '../data/items'
-import { growthInfo, growthMilestones } from '../utils/growth'
+import { growthInfo, growthMilestones, growthRankClass } from '../utils/growth'
 import type { ItemProgress, Subject, SubjectProgress } from '../types'
 
 const props = defineProps<{ subjectProgress: SubjectProgress; itemProgress: ItemProgress }>()
@@ -23,12 +23,7 @@ const evolutionStages = growthMilestones.map((stage) => ({
   ...stage,
   label: `★ きずな ${stage.count}`,
 }))
-const stageClass = (rank: string) => ({
-  'みつけた': 'rank-found',
-  'なかよし': 'rank-friend',
-  'スーパー': 'rank-super',
-  'マスター': 'rank-master',
-}[rank] || 'rank-found')
+const stageClass = (rank: string) => growthRankClass(rank)
 const subjectRankClass = (subject: Subject) => stageClass(growthInfo(subjectCount(subject)).rank)
 </script>
 
@@ -55,7 +50,7 @@ const subjectRankClass = (subject: Subject) => stageClass(growthInfo(subjectCoun
           type="button"
           @click="selectedSubject = subject"
         >
-          <FoilLayer />
+          <FoilLayer :class="subjectRankClass(subject)" />
           <div class="card-heading">
             <strong><RubyText :text="subject.label" :reading="subject.ruby" /></strong>
             <RarityBadge />
@@ -127,4 +122,55 @@ button.album-card{font-family:var(--font);color:inherit;cursor:pointer}.album-ca
 .evolution-card{border:3px solid transparent;background:radial-gradient(circle at 50% 28%,color-mix(in srgb,var(--rank-glow) 20%,transparent),#02061782 62%) padding-box,linear-gradient(135deg,var(--rank-a),var(--rank-b),var(--rank-a)) border-box;box-shadow:inset 0 0 0 2px #ffffff0b,0 8px 15px #02061775,0 0 16px color-mix(in srgb,var(--rank-glow) 35%,transparent)}.evolution-card.rank-found{--rank-a:#e2e8f0;--rank-b:#94a3b8;--rank-glow:#e2e8f0}.evolution-card.rank-friend{--rank-a:#bae6fd;--rank-b:#38bdf8;--rank-glow:#38bdf8}.evolution-card.rank-super{--rank-a:#ddd6fe;--rank-b:#a855f7;--rank-glow:#a855f7}.evolution-card.rank-master{--rank-a:#fef3c7;--rank-b:#facc15;--rank-glow:#facc15}.evolution-card.locked{background:radial-gradient(circle at 50% 28%,#47556955,#02061782 62%) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--rank-a) 42%,#64748b),#334155,color-mix(in srgb,var(--rank-b) 42%,#64748b)) border-box;box-shadow:inset 0 0 0 2px #ffffff08,0 8px 15px #02061770}
 .album-card.legendary.rank-found{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#e2e8f0,#94a3b8,#e2e8f0) border-box}.album-card.legendary.rank-friend{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#bae6fd,#38bdf8,#bae6fd) border-box;box-shadow:inset 0 0 0 2px #ffffff10,0 12px 22px #02061780,0 0 22px #38bdf852}.album-card.legendary.rank-super{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#ddd6fe,#a855f7,#ddd6fe) border-box;box-shadow:inset 0 0 0 2px #ffffff10,0 12px 22px #02061780,0 0 24px #a855f760}.album-card.legendary.rank-master{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#fef3c7,#facc15,#a855f7,#fef3c7) border-box;box-shadow:inset 0 0 0 2px #facc1524,0 12px 22px #02061780,0 0 28px #facc1560}
 .album-copy h2{min-height:1.45em;white-space:nowrap}.album-copy .undiscovered{display:block;font-size:.72rem;white-space:nowrap}.album-copy h2 :deep(.monster-name){font-size:.88rem}.companion .album-copy h2 :deep(.monster-name){font-size:.84rem}
+.evolution-card.rank-mega{
+  --rank-a:#fbcfe8;
+  --rank-b:#a5f3fc;
+  --rank-glow:#ddd6fe;
+  background:
+    radial-gradient(circle at 50% 28%, #e9d5ff38, #02061782 64%) padding-box,
+    linear-gradient(135deg, #fde68a, #f9a8d4, #c4b5fd, #7dd3fc, #a7f3d0, #fde68a) border-box;
+  box-shadow: inset 0 0 0 2px #ffffff18, 0 8px 16px #02061775, 0 0 20px #c4b5fd55;
+}
+.evolution-card.rank-special{
+  --rank-a:#fffef8;
+  --rank-b:#f6e27a;
+  --rank-glow:#fef3c7;
+  background:
+    radial-gradient(circle at 50% 20%, #fff7d64d, #02061782 64%) padding-box,
+    linear-gradient(135deg, #fffef8, #fde68a, #fff, #f8e7b0, #fffef8) border-box;
+  box-shadow: inset 0 0 18px #fff7d628, 0 8px 16px #02061775, 0 0 24px #fde68a66;
+}
+.album-card.legendary.rank-mega{
+  background:
+    linear-gradient(145deg, #ffffff14, #1e1b4bd1 55%, #0f172a) padding-box,
+    linear-gradient(135deg, #fde68a, #f9a8d4, #c4b5fd, #7dd3fc, #a7f3d0, #fde68a) border-box;
+  box-shadow: inset 0 0 0 2px #ffffff18, 0 12px 22px #02061780, 0 0 30px #c4b5fd66;
+}
+.album-card.legendary.rank-special{
+  background:
+    linear-gradient(160deg, #fff7d614, #1e1b4bd1 52%, #0f172a) padding-box,
+    linear-gradient(135deg, #fffef8, #fde68a, #fff, #f8e7b0, #fffef8) border-box;
+  box-shadow: inset 0 0 22px #fff7d622, 0 12px 22px #02061780, 0 0 34px #fde68a73;
+}
+.evolution-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.evolution-card{position:relative;min-height:0;padding:8px 4px 8px;overflow:hidden}
+.evolution-art{min-height:0}
+.evolution-art :deep(.creature-art.subject){width:min(118px,26vw)}
+.evolution-card strong{font-size:clamp(.68rem,2.5vw,.88rem);line-height:1.15}
+.evolution-card small{font-size:clamp(.52rem,2vw,.64rem);line-height:1.15}
+.evolution-card.locked .mystery-art{width:min(78px,20vw);font-size:2.2rem}
+@media(max-width:700px){
+  .modal-backdrop{padding:8px}
+  .evolution-modal{width:min(100%,420px);max-height:calc(100svh - 16px);padding:12px 8px 10px}
+  .modal-title{gap:8px;padding-inline:36px}
+  .modal-title strong{font-size:1.28rem}
+  .evolution-modal h2{margin:4px 0 6px;font-size:.82rem}
+  .modal-kizuna{margin-bottom:8px}
+  .modal-kizuna span,.modal-kizuna em{padding:5px 9px;font-size:.72rem}
+  .evolution-grid{gap:6px}
+  .evolution-art :deep(.creature-art.subject){width:min(96px,24vw)}
+  .evolution-card{padding:6px 2px 7px;border-radius:16px}
+  .close-modal{width:40px;height:40px;right:8px;top:8px}
+  .next-note{margin-top:8px;font-size:.86rem}
+}
 </style>
