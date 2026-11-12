@@ -61,6 +61,6 @@ const idleVars = computed(() => {
 .creature-art.subject img{object-fit:contain!important;transform:scale(1.18);filter:drop-shadow(0 12px 12px #020617a0) drop-shadow(0 0 14px #ffffff24)}
 .creature-art.subject.small img{transform:scale(1.04)}
 .creature-art.subject.large img{transform:scale(1.24)}
-.creature-art.subject.rank-mega img,
-.creature-art.subject.rank-special img{filter:drop-shadow(0 8px 10px #02061780)}
+.creature-art.subject.rank-mega img{filter:drop-shadow(0 12px 12px #020617a0) drop-shadow(0 0 16px #e9d5ff99) drop-shadow(0 0 8px #bae6fd66)}
+.creature-art.subject.rank-special img{filter:drop-shadow(0 12px 12px #020617a0) drop-shadow(0 0 18px #fff7d6cc) drop-shadow(0 0 10px #fde68a88)}
 </style>

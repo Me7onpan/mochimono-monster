@@ -3,7 +3,6 @@ import { registerSW } from 'virtual:pwa-register'
 import App from './App.vue'
 import './styles/base.css'
 import './styles/plan-a.css'
-import './styles/rank-frame.css'
 
 if (import.meta.env.PROD) {
   registerSW({ immediate: true })
