@@ -8,7 +8,7 @@ import RubyText from '../components/RubyText.vue'
 import ZukanBinder from '../components/ZukanBinder.vue'
 import { subjects } from '../data/subjects'
 import { items } from '../data/items'
-import { growthInfo, growthMilestones } from '../utils/growth'
+import { growthInfo, growthMilestones, growthRankClass } from '../utils/growth'
 import type { ItemProgress, Subject, SubjectProgress } from '../types'
 
 const props = defineProps<{ subjectProgress: SubjectProgress; itemProgress: ItemProgress }>()
@@ -23,12 +23,14 @@ const evolutionStages = growthMilestones.map((stage) => ({
   ...stage,
   label: `★ きずな ${stage.count}`,
 }))
-const stageClass = (rank: string) => ({
-  'みつけた': 'rank-found',
-  'なかよし': 'rank-friend',
-  'スーパー': 'rank-super',
-  'マスター': 'rank-master',
-}[rank] || 'rank-found')
+const stageClass = (rank: string) => growthRankClass(rank)
+const borderFx = (rank: string) => rank === 'マスター' || rank === 'メガ' || rank === 'スペシャル'
+const sparkLayouts: Record<string, Array<Record<string, string>>> = {
+  'マスター': [{ top: '8px', right: '10px' }, { bottom: '36px', left: '10px' }],
+  'メガ': [{ top: '7px', left: '10px' }, { top: '7px', right: '10px' }, { top: '48%', left: '4px' }, { bottom: '34px', left: '8px' }, { bottom: '34px', right: '8px' }],
+  'スペシャル': [{ top: '6px', left: '10px' }, { top: '6px', right: '10px' }, { top: '42%', left: '3px' }, { top: '42%', right: '3px' }, { bottom: '34px', left: '8px' }, { bottom: '34px', right: '8px' }],
+}
+const sparksFor = (rank: string) => sparkLayouts[rank] ?? []
 const subjectRankClass = (subject: Subject) => stageClass(growthInfo(subjectCount(subject)).rank)
 </script>
 
@@ -55,7 +57,7 @@ const subjectRankClass = (subject: Subject) => stageClass(growthInfo(subjectCoun
           type="button"
           @click="selectedSubject = subject"
         >
-          <FoilLayer />
+          <FoilLayer :class="subjectRankClass(subject)" />
           <div class="card-heading">
             <strong><RubyText :text="subject.label" :reading="subject.ruby" /></strong>
             <RarityBadge />
@@ -105,6 +107,9 @@ const subjectRankClass = (subject: Subject) => stageClass(growthInfo(subjectCoun
         </div>
         <div class="evolution-grid">
           <article v-for="stage in evolutionStages" :key="stage.rank" class="evolution-card" :class="[stageClass(stage.rank), { locked: selectedCount < stage.count }]">
+            <span v-if="stage.rank === 'スペシャル'" class="fx-prism" aria-hidden="true"></span>
+            <span v-if="borderFx(stage.rank)" class="fx-ring" aria-hidden="true"><span class="fx-shine"></span></span>
+            <span v-for="(spark, index) in sparksFor(stage.rank)" :key="index" class="spark" :class="`spark-${index + 1}`" :style="{ ...spark, animationDelay: `${(index * 0.28).toFixed(2)}s` }" aria-hidden="true"><svg viewBox="0 0 12 12"><path fill="currentColor" d="M6 .4l1.15 3.55H10.9L7.9 6.15l1.15 3.55L6 7.55 2.95 9.7 4.1 6.15 1.1 3.95h3.75z"/></svg></span>
             <div class="evolution-art">
               <CreatureArt v-if="selectedCount >= stage.count" kind="subject" :creature="selectedSubject.id" :rank="stage.rank" />
               <span v-else class="mystery-art">?</span>
@@ -127,4 +132,30 @@ button.album-card{font-family:var(--font);color:inherit;cursor:pointer}.album-ca
 .evolution-card{border:3px solid transparent;background:radial-gradient(circle at 50% 28%,color-mix(in srgb,var(--rank-glow) 20%,transparent),#02061782 62%) padding-box,linear-gradient(135deg,var(--rank-a),var(--rank-b),var(--rank-a)) border-box;box-shadow:inset 0 0 0 2px #ffffff0b,0 8px 15px #02061775,0 0 16px color-mix(in srgb,var(--rank-glow) 35%,transparent)}.evolution-card.rank-found{--rank-a:#e2e8f0;--rank-b:#94a3b8;--rank-glow:#e2e8f0}.evolution-card.rank-friend{--rank-a:#bae6fd;--rank-b:#38bdf8;--rank-glow:#38bdf8}.evolution-card.rank-super{--rank-a:#ddd6fe;--rank-b:#a855f7;--rank-glow:#a855f7}.evolution-card.rank-master{--rank-a:#fef3c7;--rank-b:#facc15;--rank-glow:#facc15}.evolution-card.locked{background:radial-gradient(circle at 50% 28%,#47556955,#02061782 62%) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--rank-a) 42%,#64748b),#334155,color-mix(in srgb,var(--rank-b) 42%,#64748b)) border-box;box-shadow:inset 0 0 0 2px #ffffff08,0 8px 15px #02061770}
 .album-card.legendary.rank-found{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#e2e8f0,#94a3b8,#e2e8f0) border-box}.album-card.legendary.rank-friend{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#bae6fd,#38bdf8,#bae6fd) border-box;box-shadow:inset 0 0 0 2px #ffffff10,0 12px 22px #02061780,0 0 22px #38bdf852}.album-card.legendary.rank-super{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#ddd6fe,#a855f7,#ddd6fe) border-box;box-shadow:inset 0 0 0 2px #ffffff10,0 12px 22px #02061780,0 0 24px #a855f760}.album-card.legendary.rank-master{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#fef3c7,#facc15,#a855f7,#fef3c7) border-box;box-shadow:inset 0 0 0 2px #facc1524,0 12px 22px #02061780,0 0 28px #facc1560}
 .album-copy h2{min-height:1.45em;white-space:nowrap}.album-copy .undiscovered{display:block;font-size:.72rem;white-space:nowrap}.album-copy h2 :deep(.monster-name){font-size:.88rem}.companion .album-copy h2 :deep(.monster-name){font-size:.84rem}
+.album-card.legendary.rank-mega{background:linear-gradient(145deg,#ffffff14,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#fde68a,#f9a8d4,#c4b5fd,#7dd3fc,#a7f3d0,#fde68a) border-box;box-shadow:inset 0 0 0 2px #ffffff18,0 12px 22px #02061780,0 0 30px #c4b5fd66}
+.album-card.legendary.rank-special{background:linear-gradient(160deg,#fff7d614,#1e1b4bd1 52%,#0f172a) padding-box,linear-gradient(135deg,#fffef8,#fde68a,#fff,#f8e7b0,#fffef8) border-box;box-shadow:inset 0 0 22px #fff7d622,0 12px 22px #02061780,0 0 34px #fde68a73}
+.evolution-card.rank-master{animation:master-halo 3s ease-in-out infinite}
+.fx-ring,.fx-prism{position:absolute;z-index:4;inset:0;border-radius:inherit;padding:3px;pointer-events:none;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;overflow:hidden}
+.fx-shine{position:absolute;inset:-40% -60%;background:linear-gradient(115deg,transparent 38%,#ffffff00 42%,#fffce8cc 50%,#ffffff00 58%,transparent 62%);animation:shine-sweep 3s ease-in-out infinite}
+.spark{position:absolute;z-index:5;width:10px;height:10px;pointer-events:none;color:#fde68a;filter:drop-shadow(0 0 4px currentColor);animation:twinkle 1.6s ease-in-out infinite}
+.spark svg{display:block;width:100%;height:100%}
+.evolution-card.rank-mega{--rank-a:#FFD1B8;--rank-b:#FF6FA3;--rank-glow:#FF6FA3;--a:0deg;background:radial-gradient(circle at 50% 28%,color-mix(in srgb,var(--rank-glow) 20%,transparent),#02061782 62%) padding-box,conic-gradient(from var(--a),#FF6FA3,#FFA07A,#FFD1B8,#FFA07A,#FF6FA3) border-box;box-shadow:inset 0 0 0 2px #ffffff0b,0 8px 15px #02061775,0 0 16px color-mix(in srgb,var(--rank-glow) 35%,transparent);animation:mega-flow 5s linear infinite}
+.evolution-card.rank-mega .fx-shine{background:linear-gradient(115deg,transparent 38%,#ffffff00 42%,#ffe4d4dd 50%,#ffffff00 58%,transparent 62%);animation-duration:4s}
+.evolution-card.rank-mega .spark-1{color:#FFD1B8}.evolution-card.rank-mega .spark-2{color:#FFA07A}.evolution-card.rank-mega .spark-3{color:#FF6FA3}.evolution-card.rank-mega .spark-4{color:#ffe8c8}.evolution-card.rank-mega .spark-5{color:#FFA07A}
+.evolution-card.rank-special{--rank-a:#f8fafc;--rank-b:#e8edf2;--rank-glow:#f5e6c0;--a:0deg;background:radial-gradient(circle at 50% 28%,color-mix(in srgb,var(--rank-glow) 20%,transparent),#02061782 62%) padding-box,conic-gradient(from var(--a),#f8fafc,#e2e8f0,#fef3c7,#f8fafc,#c4b5fd,#bae6fd,#f8fafc) border-box;box-shadow:inset 0 0 0 2px #ffffff0b,0 8px 15px #02061775,0 0 16px color-mix(in srgb,var(--rank-glow) 35%,transparent);animation:special-flow 6s linear infinite}
+.fx-prism{background:conic-gradient(from calc(var(--a) + 90deg),transparent 0 8%,#ff7b9e55 12%,transparent 16%,#7dd3fc55 30%,transparent 34%,#c4b5fd55 50%,transparent 54%,#fde68a55 72%,transparent 76%,#86efac44 88%,transparent 92%);opacity:.9}
+.evolution-card.rank-special .fx-shine{background:linear-gradient(115deg,transparent 36%,#ffffff00 42%,#ffffffee 50%,#e0f2fe88 54%,#ffffff00 60%,transparent 66%);animation-duration:4.5s}
+.evolution-card.rank-special .spark-1{color:#ffd0e4}.evolution-card.rank-special .spark-2{color:#fff6d8}.evolution-card.rank-special .spark-3{color:#e4e0ff}.evolution-card.rank-special .spark-4{color:#bae6fd}.evolution-card.rank-special .spark-5{color:#bbf7d0}.evolution-card.rank-special .spark-6{color:#fde68a}
+.evolution-card.rank-mega.locked,.evolution-card.rank-special.locked{animation:none;filter:saturate(.55);background:radial-gradient(circle at 50% 28%,#47556955,#02061782 62%) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--rank-a) 42%,#64748b),#334155,color-mix(in srgb,var(--rank-b) 42%,#64748b)) border-box;box-shadow:inset 0 0 0 2px #ffffff08,0 8px 15px #02061770}
+.evolution-card.locked .fx-ring,.evolution-card.locked .fx-prism,.evolution-card.locked .spark{display:none}
+@keyframes master-halo{0%,100%{box-shadow:inset 0 0 0 2px #ffffff0b,0 8px 15px #02061775,0 0 16px color-mix(in srgb,var(--rank-glow) 35%,transparent)}50%{box-shadow:inset 0 0 0 2px #ffffff0b,0 8px 15px #02061775,0 0 28px color-mix(in srgb,var(--rank-glow) 75%,transparent),0 0 42px #facc1548}}
+@keyframes shine-sweep{0%{transform:translateX(-45%) translateY(-10%) rotate(8deg)}100%{transform:translateX(45%) translateY(10%) rotate(8deg)}}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.65) rotate(0deg)}50%{opacity:1;transform:scale(1.15) rotate(18deg)}}
+@keyframes mega-flow{to{--a:360deg}}
+@keyframes special-flow{to{--a:360deg}}
+@media(prefers-reduced-motion:reduce){.evolution-card.rank-master,.evolution-card.rank-mega,.evolution-card.rank-special,.fx-shine,.spark{animation:none!important}}
+</style>
+
+<style>
+@property --a { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
 </style>

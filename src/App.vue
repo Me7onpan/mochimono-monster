@@ -16,7 +16,7 @@ import type { ItemProgress, Stats, SubjectProgress, TodayState, WeeklyItemState 
 type Page = 'home'|'subjects'|'items'|'complete'|'zukan'
 const page = ref<Page>('home')
 const latestItem = ref<string>()
-const updateVersion = '2026-10-25-gymclothes'
+const updateVersion = '2026-11-11-mega-special'
 const dateKey = () => formatToday()
 const formatDate = (date:Date) => `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`
 const addDays = (date:string, days:number) => {
@@ -152,11 +152,11 @@ if (!today.value.isCompleted && today.value.selectedSubjectIds.length > 0 && req
   <div v-if="updateOpen" class="update-backdrop">
     <section class="update-card" role="dialog" aria-modal="true" aria-labelledby="update-title">
       <span class="update-badge">NEW</span>
-      <h2 id="update-title">あたらしい なかまが きたよ！</h2>
+      <h2 id="update-title">カードが もっと かっこよく なったよ！</h2>
       <ul>
-        <li><RubyText text="作文帳" reading="さくぶんちょう" />れんじゃくが、<RubyText text="毎日" reading="まいにち" />の もちものに なったよ！</li>
-        <li><RubyText text="体操着" reading="たいそうぎ" />れっさーぱんだが、<RubyText text="月曜日" reading="げつようび" />の もちものに なったよ！</li>
-        <li><RubyText text="金曜日" reading="きんようび" />は、<RubyText text="体操着" reading="たいそうぎ" />を おうちに もってかえろう。</li>
+        <li>100かいで「メガ」に <RubyText text="進化" reading="しんか" />するよ！</li>
+        <li>150かいで「スペシャル」に <RubyText text="進化" reading="しんか" />！</li>
+        <li>カードが うごいて キラキラするよ！</li>
       </ul>
       <button type="button" @click="closeUpdateNotice">OK！みにいく</button>
     </section>
