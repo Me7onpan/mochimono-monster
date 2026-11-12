@@ -4,7 +4,7 @@
 .plan-a-tilt {
   transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transform-style: preserve-3d;
-  transition: transform .35s ease-out, box-shadow .24s ease;
+  transition: transform .35s ease-out;
   will-change: transform;
 }
 .plan-a-tilt.is-tilting {
@@ -74,15 +74,10 @@
   opacity: 1;
   filter: saturate(1.15);
 }
-.legend-card.rank-mega .art-stage.plan-a-aura::before {
-  background: radial-gradient(circle, #f8d0ea55 0%, #e4d4ff33 34%, transparent 70%);
-  animation: plan-a-aura 2.6s ease-in-out infinite;
-  opacity: 1;
-}
+.legend-card.rank-mega .art-stage.plan-a-aura::before,
 .legend-card.rank-special .art-stage.plan-a-aura::before {
-  background: radial-gradient(circle, #fff3c455 0%, #f3d98a33 34%, transparent 70%);
-  animation: plan-a-aura 2.2s ease-in-out infinite;
-  opacity: 1;
+  animation: none;
+  opacity: 0;
 }
 @keyframes plan-a-aura {
   0%, 100% { transform: scale(.88); opacity: .55; }
@@ -117,31 +112,12 @@
   animation: plan-a-holo-sweep 6.4s ease-in-out .9s infinite reverse;
   pointer-events: none;
 }
-.foil-layer.plan-a-holo.rank-mega::after {
-  background: linear-gradient(115deg, transparent 24%, #ffffff2e 32%, #fbcfe866 38%, #ddd6fe70 44%, #bae6fd66 50%, #a7f3d055 56%, #fde68a66 62%, transparent 72%);
-  animation-duration: 4.4s;
-  filter: saturate(1.12) brightness(1.06);
-}
-.foil-layer.plan-a-holo.rank-mega::before {
-  content: '';
-  position: absolute;
-  inset: -90% -50%;
-  background: linear-gradient(72deg, transparent 38%, #f9a8d433 46%, #ffffff24 50%, #a5f3fc38 56%, transparent 64%);
-  animation: plan-a-holo-sweep 6.2s ease-in-out .7s infinite reverse;
-  pointer-events: none;
-}
+.foil-layer.plan-a-holo.rank-mega::before,
+.foil-layer.plan-a-holo.rank-mega::after,
+.foil-layer.plan-a-holo.rank-special::before,
 .foil-layer.plan-a-holo.rank-special::after {
-  background: linear-gradient(115deg, transparent 22%, #ffffff66 32%, #fff7d6dd 42%, #fde68ab8 50%, #fffef8cc 56%, #f6e7b099 64%, transparent 74%);
-  animation-duration: 3.8s;
-  filter: saturate(1.04) brightness(1.1);
-}
-.foil-layer.plan-a-holo.rank-special::before {
-  content: '';
-  position: absolute;
-  inset: -100% -60%;
-  background: radial-gradient(circle at 50% 46%, #ffffff22 0%, #f3d98a28 18%, transparent 46%);
-  animation: plan-a-special-glow 3.4s ease-in-out infinite;
-  pointer-events: none;
+  animation: none;
+  opacity: 0;
 }
 @keyframes plan-a-holo-sweep {
   0% { transform: translateX(-62%) rotate(8deg); opacity: 0; }

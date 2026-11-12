@@ -23,6 +23,17 @@ export function growthRankClass(rank: string) {
   return rankFrameClass[rank as GrowthRank] ?? 'rank-found'
 }
 
+export function growthLevel(rank: string) {
+  const index = growthMilestones.findIndex((step) => step.rank === rank)
+  return index >= 0 ? index + 1 : 0
+}
+
+export function rankStarCount(rank: string) {
+  if (rank === 'スーパー' || rank === 'マスター') return 2
+  if (rank === 'スペシャル') return 3
+  return 0
+}
+
 export function growthInfo(count: number) {
   const current = [...growthMilestones].reverse().find((step) => count >= step.count)
   const next = growthMilestones.find((step) => count < step.count)
