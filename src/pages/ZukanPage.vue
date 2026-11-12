@@ -123,43 +123,52 @@ button.album-card{font-family:var(--font);color:inherit;cursor:pointer}.album-ca
 .album-card.legendary.rank-found{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#e2e8f0,#94a3b8,#e2e8f0) border-box}.album-card.legendary.rank-friend{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#bae6fd,#38bdf8,#bae6fd) border-box;box-shadow:inset 0 0 0 2px #ffffff10,0 12px 22px #02061780,0 0 22px #38bdf852}.album-card.legendary.rank-super{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#ddd6fe,#a855f7,#ddd6fe) border-box;box-shadow:inset 0 0 0 2px #ffffff10,0 12px 22px #02061780,0 0 24px #a855f760}.album-card.legendary.rank-master{background:linear-gradient(145deg,#ffffff12,#1e1b4bd1 55%,#0f172a) padding-box,linear-gradient(135deg,#fef3c7,#facc15,#a855f7,#fef3c7) border-box;box-shadow:inset 0 0 0 2px #facc1524,0 12px 22px #02061780,0 0 28px #facc1560}
 .album-copy h2{min-height:1.45em;white-space:nowrap}.album-copy .undiscovered{display:block;font-size:.72rem;white-space:nowrap}.album-copy h2 :deep(.monster-name){font-size:.88rem}.companion .album-copy h2 :deep(.monster-name){font-size:.84rem}
 .evolution-card.rank-mega{
-  --rank-a:#fbcfe8;
-  --rank-b:#c4b5fd;
-  --rank-glow:#ddd6fe;
+  --rank-a:#f9c6e4;
+  --rank-b:#b7e7f2;
+  --rank-glow:#e7d6ff;
   background:
-    linear-gradient(165deg, #241838, #141228 62%, #10182c) padding-box,
-    linear-gradient(135deg, #fde68a, #f9a8d4, #c4b5fd, #7dd3fc, #a7f3d0, #fde68a) border-box;
-  box-shadow: inset 0 0 0 1px #ffffff33, 0 8px 16px #02061775, 0 0 14px #c4b5fd73;
+    linear-gradient(155deg, #fff4fa 0%, #f3e6ff 46%, #e5f6f6 100%) padding-box,
+    linear-gradient(135deg, #fde7b0, #f8c2de, #d9c2f5, #b7e7f2, #f7d0ea) border-box;
+  box-shadow: inset 0 0 0 1px #ffffffd0, 0 8px 14px #6b4c8a22, 0 0 12px #e4d0ff80;
   filter: none;
 }
 .evolution-card.rank-special{
-  --rank-a:#fffef8;
-  --rank-b:#f0d78a;
-  --rank-glow:#fde68a;
+  --rank-a:#fff6d4;
+  --rank-b:#e0b44a;
+  --rank-glow:#f3d98a;
   background:
-    linear-gradient(165deg, #2a2316, #171322 58%, #10182c) padding-box,
-    linear-gradient(135deg, #fffef6, #fde68a, #fff6d0, #f3e0a4, #fffef6) border-box;
-  box-shadow: inset 0 0 0 1px #fff1c266, 0 8px 16px #02061775, 0 0 12px #fde68aaa, 0 0 22px #fff4c44d;
+    linear-gradient(160deg, #fffdf6 0%, #fff1cc 54%, #f6e4b0 100%) padding-box,
+    linear-gradient(135deg, #fff3c4, #e8c547, #b8860b, #f0d56a) border-box;
+  box-shadow: inset 0 0 0 1px #e8c45a99, 0 8px 14px #8a5a1024, 0 0 12px #f0d060aa, 0 0 20px #fff1c066;
   filter: none;
 }
 .evolution-card.rank-mega strong,
-.evolution-card.rank-special strong{
-  position: relative;
-  z-index: 3;
-  color: #fff;
-  text-shadow: 0 1px 2px #020617;
-}
+.evolution-card.rank-special strong,
 .evolution-card.rank-mega small,
 .evolution-card.rank-special small{
   position: relative;
   z-index: 3;
-  color: #fde68a;
-  text-shadow: 0 1px 2px #020617;
+}
+.evolution-card.rank-mega strong{
+  color: #4a3568;
+  text-shadow: 0 1px 0 #ffffffd6;
+}
+.evolution-card.rank-mega small{
+  color: #4a3568;
+  text-shadow: 0 1px 0 #ffffffd6;
+}
+.evolution-card.rank-special strong{
+  color: #6b4a12;
+  text-shadow: 0 1px 0 #fff8e0;
+}
+.evolution-card.rank-special small{
+  color: #6b4a12;
+  text-shadow: 0 1px 0 #fff8e0;
 }
 .evolution-card.rank-mega:not(.locked) .evolution-art :deep(img),
 .evolution-card.rank-special:not(.locked) .evolution-art :deep(img){
   opacity: 1;
-  filter: drop-shadow(0 6px 8px #020617c0) !important;
+  filter: drop-shadow(0 6px 8px #6b534033) !important;
 }
 .evolution-card.rank-mega.locked,
 .evolution-card.rank-special.locked{

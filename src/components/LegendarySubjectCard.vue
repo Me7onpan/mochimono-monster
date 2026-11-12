@@ -39,36 +39,47 @@ useCardTilt(rootEl)
 .card-top{margin-bottom:12px}.card-copy{margin-top:12px}.legend-card.compact{padding:18px}.legend-card.compact .card-top{margin-bottom:14px}.legend-card.compact .card-copy{margin-top:14px}
 .legend-card{cursor:default}button.legend-card{cursor:pointer}
 .legend-card.rank-mega{
-  --frame-a:#fbcfe8;
-  --frame-b:#a5f3fc;
-  --frame-glow:#e9d5ff99;
+  --frame-a:#f9c6e4;
+  --frame-b:#b7e7f2;
+  --frame-glow:#eadbff88;
   background:
-    linear-gradient(155deg,#241447,#17133f 46%,#0f172a) padding-box,
-    linear-gradient(120deg,#fde68a,#f9a8d4,#c4b5fd,#7dd3fc,#99f6e4,#fde68a) border-box;
-  box-shadow:
-    inset 0 0 0 3px #ffffff24,
-    inset 0 0 28px #ddd6fe33,
-    0 16px 28px #02061782,
-    0 0 36px #c4b5fd55;
+    linear-gradient(155deg,#fff5fb 0%,#f3e8ff 42%,#e6f7f6 100%) padding-box,
+    linear-gradient(120deg,#fde7b0,#f8c2de,#d9c2f5,#b7e7f2,#f7d0ea,#fde7b0) border-box;
+  box-shadow:inset 0 0 0 1px #ffffffcc,0 16px 28px #6b4c8a24,0 0 22px #e4d0ff73;
 }
 .legend-card.rank-mega::before{
-  border-color:#f5d0fe;
-  box-shadow:inset 0 0 18px #e9d5ff55,0 0 12px #bae6fd33;
+  border-color:#e7d0f5;
+  box-shadow:none;
+}
+.legend-card.rank-mega .card-copy{
+  background:#2c2348e8;
+  border-color:#ffffff33;
+}
+.legend-card.rank-mega .art-stage :deep(img){
+  opacity:1;
+  filter:drop-shadow(0 10px 10px #6b534044)!important;
 }
 .legend-card.rank-special{
-  --frame-a:#fffef8;
-  --frame-b:#f0d78a;
-  --frame-glow:#fff4c888;
+  --frame-a:#fff1c2;
+  --frame-b:#c9972a;
+  --frame-glow:#f3d98a88;
   background:
-    linear-gradient(155deg,#2a2416,#17132a 48%,#0f172a) padding-box,
-    linear-gradient(135deg,#fffef6,#fde68a,#fff6d0,#f3e0a4,#fffef6) border-box;
-  box-shadow:
-    inset 0 0 0 1px #fff1c255,
-    0 18px 30px #02061788,
-    0 0 28px #fde68a88;
+    linear-gradient(160deg,#fffdf6 0%,#fff1cc 50%,#f6e4b0 100%) padding-box,
+    linear-gradient(135deg,#fff3c4,#e8c547,#b8860b,#f0d56a,#fff6d0) border-box;
+  box-shadow:inset 0 0 0 1px #e8c45aaa,0 16px 28px #8a5a1024,0 0 22px #f0d06099;
 }
 .legend-card.rank-special::before{
-  border-color:#fff4c8;
-  box-shadow:inset 0 0 0 1px #fff7d655,0 0 12px #fde68a44;
+  border-color:#e6c15a;
+  box-shadow:0 0 10px #f0d06055;
 }
+.legend-card.rank-special .card-copy{
+  background:#4a3516e8;
+  border-color:#fff1c244;
+}
+.legend-card.rank-special .art-stage :deep(img){
+  opacity:1;
+  filter:drop-shadow(0 10px 10px #6b534044)!important;
+}
+.legend-card.rank-mega .card-copy p,
+.legend-card.rank-special .card-copy p{color:#f8f1e4}
 </style>

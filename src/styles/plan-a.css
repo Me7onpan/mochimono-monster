@@ -75,12 +75,12 @@
   filter: saturate(1.15);
 }
 .legend-card.rank-mega .art-stage.plan-a-aura::before {
-  background: radial-gradient(circle, #fbcfe8bb 0%, #ddd6fe66 28%, #bae6fd55 46%, #a7f3d044 62%, transparent 76%);
+  background: radial-gradient(circle, #f8d0ea55 0%, #e4d4ff33 34%, transparent 70%);
   animation: plan-a-aura 2.6s ease-in-out infinite;
   opacity: 1;
 }
 .legend-card.rank-special .art-stage.plan-a-aura::before {
-  background: radial-gradient(circle, #fffef6ee 0%, #fde68a99 26%, #fff4cc66 48%, transparent 74%);
+  background: radial-gradient(circle, #fff3c455 0%, #f3d98a33 34%, transparent 70%);
   animation: plan-a-aura 2.2s ease-in-out infinite;
   opacity: 1;
 }
@@ -139,7 +139,7 @@
   content: '';
   position: absolute;
   inset: -100% -60%;
-  background: radial-gradient(circle at 50% 46%, #ffffff55 0%, #fde68a33 16%, transparent 42%);
+  background: radial-gradient(circle at 50% 46%, #ffffff22 0%, #f3d98a28 18%, transparent 46%);
   animation: plan-a-special-glow 3.4s ease-in-out infinite;
   pointer-events: none;
 }
@@ -168,12 +168,12 @@
 .legend-card.rank-master .particles.plan-a-ambient i:nth-child(3n) { color: #fef08a; }
 .legend-card.rank-master .particles.plan-a-ambient i:nth-child(3n+1) { color: #fdba74; }
 .legend-card.rank-master .particles.plan-a-ambient i:nth-child(3n+2) { color: #e9d5ff; }
-.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n) { color: #fbcfe8; }
-.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n+1) { color: #ddd6fe; }
-.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n+2) { color: #bae6fd; }
-.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n+3) { color: #fde68a; }
-.legend-card.rank-special .particles.plan-a-ambient i:nth-child(odd) { color: #fff7d6; }
-.legend-card.rank-special .particles.plan-a-ambient i:nth-child(even) { color: #fde68a; }
+.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n) { color: #d48ab8; }
+.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n+1) { color: #b49adf; }
+.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n+2) { color: #7eb8c9; }
+.legend-card.rank-mega .particles.plan-a-ambient i:nth-child(4n+3) { color: #d4b15a; }
+.legend-card.rank-special .particles.plan-a-ambient i:nth-child(odd) { color: #c9972a; }
+.legend-card.rank-special .particles.plan-a-ambient i:nth-child(even) { color: #e0b44a; }
 @keyframes plan-a-sparkle {
   0%, 100% { opacity: 0; transform: translateY(10px) scale(.35) rotate(0deg); }
   18% { opacity: .95; }
